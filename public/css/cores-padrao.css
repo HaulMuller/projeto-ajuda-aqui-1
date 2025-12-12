@@ -1,0 +1,56 @@
+:root {
+    /* Cores principais - Tema solidário e acolhedor */
+    --cor-primaria: #2563eb;
+    --cor-primaria-hover: #1d4ed8;
+    --cor-primaria-light: #dbeafe;
+    --cor-secundaria: #10b981;
+    --cor-secundaria-hover: #059669;
+    
+    /* Cores de fundo */
+    --cor-branco: #ffffff;
+    --cor-preto: #0f172a;
+    --cor-fundo: #f8fafc;
+    --cor-fundo-claro: #f1f5f9;
+    --cor-fundo-card: #ffffff;
+    
+    /* Cores de texto */
+    --cor-texto: #1e293b;
+    --cor-texto-secundario: #64748b;
+    --cor-texto-claro: #94a3b8;
+    
+    /* Cores de borda */
+    --cor-borda: #e2e8f0;
+    --cor-borda-hover: #cbd5e1;
+    
+    /* Cores de status/urgência */
+    --cor-sucesso: #22c55e;
+    --cor-sucesso-bg: #dcfce7;
+    --cor-alerta: #f59e0b;
+    --cor-alerta-bg: #fef3c7;
+    --cor-perigo: #ef4444;
+    --cor-perigo-bg: #fee2e2;
+    --cor-info: #0ea5e9;
+    --cor-info-bg: #e0f2fe;
+    --cor-critica: #dc2626;
+    --cor-critica-bg: #fef2f2;
+    
+    /* Gradientes */
+    --gradiente-hero: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+    --gradiente-card: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+    
+    /* Sombras */
+    --sombra-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --sombra-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --sombra-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    --sombra-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+    
+    /* Bordas */
+    --radius-sm: 0.375rem;
+    --radius-md: 0.5rem;
+    --radius-lg: 0.75rem;
+    --radius-xl: 1rem;
+    --radius-full: 9999px;
+    
+    /* Transições */
+    --transicao: all 0.3s ease;
+}
