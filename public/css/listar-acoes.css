@@ -242,30 +242,58 @@
 }
 
 .paginacao nav {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.pagination-list {
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
-.paginacao a,
-.paginacao span {
+.pagination-item a,
+.pagination-item span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     padding: 0.5rem 0.9rem;
     border-radius: var(--radius-md);
     font-size: 0.9rem;
     text-decoration: none;
-}
-
-.paginacao a {
+    min-width: 40px;
+    height: 40px;
     background: var(--cor-branco);
     color: var(--cor-texto);
     border: 1px solid var(--cor-borda);
     transition: var(--transicao);
 }
 
-.paginacao a:hover {
+.pagination-item a:hover {
     background: var(--cor-primaria-light);
     border-color: var(--cor-primaria);
     color: var(--cor-primaria);
+}
+
+/* Página atual */
+.pagination-item span.active {
+    background: var(--cor-primaria);
+    color: var(--cor-branco);
+    border: 1px solid var(--cor-primaria);
+    font-weight: 600;
+}
+
+/* Links desabilitados */
+.pagination-item.disabled span {
+    background: var(--cor-fundo-claro);
+    color: var(--cor-texto-claro);
+    border: 1px solid var(--cor-borda);
+    cursor: not-allowed;
+    opacity: 0.5;
 }
 
 /* Sem Resultados */

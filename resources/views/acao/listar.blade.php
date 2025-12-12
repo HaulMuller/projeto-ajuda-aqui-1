@@ -123,7 +123,7 @@
 
             <!-- Paginação -->
             <div class="paginacao">
-                {{ $acoes->withQueryString()->links() }}
+                {{ $acoes->withQueryString()->links('vendor.pagination.custom') }}
             </div>
         @else
             <div class="sem-resultados">

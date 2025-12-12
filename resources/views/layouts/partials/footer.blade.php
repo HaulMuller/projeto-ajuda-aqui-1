@@ -27,10 +27,19 @@
             <div class="footer-categorias">
                 <h4 class="footer-titulo">Categorias</h4>
                 <ul>
-                    <li><a href="{{ route('acoes.listar', ['categoria_id' => 1]) }}">🍎 Alimentos</a></li>
-                    <li><a href="{{ route('acoes.listar', ['categoria_id' => 2]) }}">👕 Roupas</a></li>
-                    <li><a href="{{ route('acoes.listar', ['categoria_id' => 3]) }}">📚 Livros</a></li>
-                    <li><a href="{{ route('acoes.listar', ['categoria_id' => 4]) }}">🧸 Brinquedos</a></li>
+                    @php
+                        $categoriasFooter = \App\Models\Categoria::where('ativo', true)
+                            ->orderBy('nome')
+                            ->limit(6)
+                            ->get();
+                    @endphp
+                    @foreach($categoriasFooter as $categoria)
+                        <li>
+                            <a href="{{ route('acoes.listar', ['categoria_id' => $categoria->id]) }}">
+                                {{ $categoria->icone }} {{ $categoria->nome }}
+                            </a>
+                        </li>
+                    @endforeach
                 </ul>
             </div>
 
