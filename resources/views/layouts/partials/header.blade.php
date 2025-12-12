@@ -4,7 +4,7 @@
         <a href="{{ route('home') }}" class="header-logo">
             <img class="logo" src="{{ asset('img/2.png') }}" alt="Ajuda Aqui">
         </a>
-        
+
         <!-- Navegação -->
         <nav class="header-nav">
             <a href="{{ route('home') }}" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}">
@@ -33,12 +33,12 @@
                     <ul class="dropdown-menu dropdown-menu-end">
                         <li>
                             <a class="dropdown-item" href="{{ route('dashboard') }}">
-                                <span>➕</span> Cadastrar Ação
+                                <i class="bi bi-plus-circle"></i> Cadastrar Ação
                             </a>
                         </li>
                         <li>
                             <a class="dropdown-item" href="{{ route('profile.edit') }}">
-                                <span>👤</span> Meu Perfil
+                                <i class="bi bi-person"></i> Meu Perfil
                             </a>
                         </li>
                         <li><hr class="dropdown-divider"></li>
@@ -46,7 +46,7 @@
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
                                 <button class="dropdown-item text-danger" type="submit">
-                                    <span>🚪</span> Sair
+                                    <i class="bi bi-box-arrow-right"></i> Sair
                                 </button>
                             </form>
                         </li>
@@ -55,10 +55,10 @@
             @else
                 <!-- Botões para visitantes -->
                 <a href="{{ route('login') }}" class="btn-cadastrar-acao">
-                    <span>➕</span> Cadastrar Ação
+                    <i class="bi bi-plus-circle"></i> Cadastrar Ação
                 </a>
                 <a href="{{ route('login') }}" class="btn-entrar">
-                    Entrar
+                    <i class="bi bi-box-arrow-in-right"></i> Entrar
                 </a>
             @endauth
         </div>

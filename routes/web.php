@@ -18,6 +18,8 @@ Route::get('/acoes/{acao}', [AcaoController::class, 'show'])->name('acoes.show')
 
 // Inscrição em campanhas (voluntário/doador)
 Route::post('/acoes/{acao}/inscricao', [App\Http\Controllers\InscricaoController::class, 'store'])->name('inscricao.store');
+// Ver inscritos (apenas organizador)
+Route::get('/acoes/{acao}/inscritos', [AcaoController::class, 'inscritos'])->name('acoes.inscritos');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [AcaoController::class, 'create'])->name('dashboard');

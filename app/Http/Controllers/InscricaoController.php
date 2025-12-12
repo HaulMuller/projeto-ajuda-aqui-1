@@ -20,9 +20,14 @@ class InscricaoController extends Controller
             'telefone' => 'nullable|string|max:20',
             'tipo' => 'required|in:voluntario,doador',
             'mensagem' => 'nullable|string|max:500',
+
+            'tipo_doacao' => 'nullable|in:dinheiro,alimentos,roupas,outros',
+            'valor_estimado' => 'nullable|numeric|min:0',
+            'descricao_doacao' => 'nullable|string'
         ]);
 
         if ($validated['tipo'] === 'voluntario') {
+
             Voluntario::create([
                 'acao_id' => $acao->id,
                 'nome' => $validated['nome'],
@@ -30,18 +35,24 @@ class InscricaoController extends Controller
                 'telefone' => $validated['telefone'] ?? null,
                 'mensagem' => $validated['mensagem'] ?? null,
             ]);
+
         } else {
+
             Doador::create([
                 'acao_id' => $acao->id,
                 'nome' => $validated['nome'],
                 'email' => $validated['email'],
                 'telefone' => $validated['telefone'] ?? null,
-                'mensagem' => $validated['mensagem'] ?? null,
+                'tipo_doacao' => $validated['tipo_doacao'] ?? 'dinheiro',
+                'valor_estimado' => $validated['valor_estimado'] ?? null,
+                'descricao_doacao' => $validated['descricao_doacao'] ?? null,
+                'status' => 'pendente'
             ]);
         }
 
-        return redirect()->back()->with('inscricao_sucesso', 
+        return redirect()->back()->with('inscricao_sucesso',
             'Inscrição realizada com sucesso! Em breve entraremos em contato.');
     }
+
 }
 

@@ -8,16 +8,18 @@
         <div class="hero-content">
             <h1 class="hero-titulo">Juntos podemos fazer a diferença!</h1>
             <p class="hero-subtitulo">
-                Conectamos pessoas que precisam de ajuda com aquelas que podem colaborar. 
+                Conectamos pessoas que precisam de ajuda com aquelas que podem colaborar.
                 Encontre campanhas solidárias ou cadastre sua própria ação.
             </p>
             <div class="hero-buttons">
-                <a href="{{ route('acoes.listar') }}" class="btn-hero btn-hero-primary">
-                    <span>🔍</span> Encontrar Campanhas
-                </a>
-                <a href="{{ route('login') }}" class="btn-hero btn-hero-secondary">
-                    <span>➕</span> Cadastrar Ação
-                </a>
+                <div class="hero-buttons">
+                    <a href="{{ route('acoes.listar') }}" class="btn-hero btn-hero-primary">
+                        <i class="bi bi-search"></i> Encontrar Campanhas
+                    </a>
+                    <a href="{{ route('login') }}" class="btn-hero btn-hero-secondary">
+                        <i class="bi bi-plus-circle" ></i> Cadastrar Ação
+                    </a>
+                </div>
             </div>
         </div>
         <div class="hero-stats">
@@ -66,7 +68,7 @@
     <section class="container-eventos-destaque">
         <h2 class="titulo-secao">Campanhas em Destaque</h2>
         <p class="subtitulo-secao">Ações que mais precisam de sua ajuda neste momento</p>
-        
+
         @if($acoesDestaque->count() > 0)
             <div class="grid-destaque">
                 @foreach ($acoesDestaque as $acao)
@@ -159,7 +161,7 @@
         <div class="cta-content">
             <h2 class="cta-titulo">Tem uma campanha solidária?</h2>
             <p class="cta-descricao">
-                Cadastre sua ação e alcance mais pessoas que desejam ajudar. 
+                Cadastre sua ação e alcance mais pessoas que desejam ajudar.
                 É rápido, fácil e totalmente gratuito!
             </p>
             <a href="{{ route('login') }}" class="btn-hero btn-hero-white">

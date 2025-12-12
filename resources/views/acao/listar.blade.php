@@ -16,15 +16,15 @@
                 <div class="filtros-grid">
                     <!-- Busca -->
                     <div class="filtro-item filtro-busca">
-                        <label for="titulo">🔍 Buscar</label>
-                        <input type="text" id="titulo" name="titulo" 
-                               placeholder="Digite o nome da campanha..." 
+                        <label for="titulo">Buscar</label>
+                        <input type="text" id="titulo" name="titulo"
+                               placeholder="Digite o nome da campanha..."
                                value="{{ request('titulo') }}">
                     </div>
 
                     <!-- Categoria -->
                     <div class="filtro-item">
-                        <label for="categoria_id">📁 Categoria</label>
+                        <label for="categoria_id">Categoria</label>
                         <select id="categoria_id" name="categoria_id">
                             <option value="">Todas as categorias</option>
                             @foreach ($categorias as $categoria)
@@ -37,7 +37,7 @@
 
                     <!-- Urgência -->
                     <div class="filtro-item">
-                        <label for="urgencia">🚨 Urgência</label>
+                        <label for="urgencia">Urgência</label>
                         <select id="urgencia" name="urgencia">
                             <option value="">Todas</option>
                             <option value="critica" {{ request('urgencia') == 'critica' ? 'selected' : '' }}>🔴 Crítica</option>
@@ -49,7 +49,7 @@
 
                     <!-- Data -->
                     <div class="filtro-item">
-                        <label for="data">📅 A partir de</label>
+                        <label for="data">A partir de</label>
                         <input type="date" id="data" name="data" value="{{ request('data') }}">
                     </div>
 
@@ -77,7 +77,7 @@
                 @foreach ($acoes as $acao)
                     <article class="campanha-card">
                         <div class="campanha-imagem">
-                            <img src="{{ $acao->imagem ? asset('storage/' . $acao->imagem) : asset('img/placeholder-acao.jpg') }}" 
+                            <img src="{{ $acao->imagem ? asset('storage/' . $acao->imagem) : asset('img/placeholder-acao.jpg') }}"
                                  alt="{{ $acao->titulo }}">
                             <span class="campanha-urgencia urgencia-{{ $acao->urgencia }}">
                                 @if($acao->urgencia === 'critica')
@@ -102,11 +102,11 @@
                                 📅 {{ $acao->data ? $acao->data->format('d/m/Y') : 'Data a definir' }}
                             </p>
                             <p class="campanha-descricao">{{ Str::limit($acao->descricao, 100) }}</p>
-                            
+
                             @if($acao->localizacao)
                                 <p class="campanha-local">📍 {{ Str::limit($acao->localizacao, 30) }}</p>
                             @endif
-                            
+
                             <div class="campanha-footer">
                                 <div class="campanha-stats">
                                     <span title="Voluntários">🙋 {{ $acao->quantidade_voluntarios }}</span>

@@ -567,11 +567,11 @@
     .grid-eventos {
         grid-template-columns: repeat(2, 1fr);
     }
-    
+
     .grid-categorias {
         grid-template-columns: repeat(3, 1fr);
     }
-    
+
     .passos-container {
         grid-template-columns: repeat(3, 1fr);
         gap: 1rem;
@@ -582,33 +582,33 @@
     .hero-titulo {
         font-size: 2rem;
     }
-    
+
     .hero-subtitulo {
         font-size: 1rem;
     }
-    
+
     .hero-stats {
         flex-direction: column;
         gap: 1.5rem;
     }
-    
+
     .passos-container {
         grid-template-columns: 1fr;
     }
-    
+
     .grid-destaque,
     .grid-eventos {
         grid-template-columns: 1fr;
     }
-    
+
     .grid-categorias {
         grid-template-columns: repeat(2, 1fr);
     }
-    
+
     .filtros {
         flex-direction: column;
     }
-    
+
     .campo-filtro {
         width: 100%;
     }
@@ -618,20 +618,20 @@
     .hero-section {
         padding: 2rem 1rem;
     }
-    
+
     .hero-buttons {
         flex-direction: column;
     }
-    
+
     .btn-hero {
         width: 100%;
         justify-content: center;
     }
-    
+
     .grid-categorias {
         grid-template-columns: 1fr;
     }
-    
+
     .titulo-secao {
         font-size: 1.5rem;
     }

@@ -16,38 +16,33 @@ class AcaoController extends Controller
     {
         $query = Acao::ativas()->with('categoria');
 
-        // Filtro por título
+        // Filtros
         if ($request->filled('titulo')) {
             $query->buscar($request->titulo);
         }
 
-        // Filtro por categoria
         if ($request->filled('categoria_id')) {
             $query->porCategoria($request->categoria_id);
         }
 
-        // Filtro por urgência
         if ($request->filled('urgencia')) {
             $query->porUrgencia($request->urgencia);
         }
 
-        // Filtro por data
         if ($request->filled('data')) {
             $query->whereDate('data', '>=', $request->data);
         }
-
-        $acoes = $query->orderByRaw("CASE urgencia 
-                WHEN 'critica' THEN 1 
-                WHEN 'alta' THEN 2 
-                WHEN 'media' THEN 3 
-                WHEN 'baixa' THEN 4 
-                ELSE 5 
+        $acoes = $query->orderByRaw("CASE urgencia
+                WHEN 'critica' THEN 1
+                WHEN 'alta' THEN 2
+                WHEN 'media' THEN 3
+                WHEN 'baixa' THEN 4
+                ELSE 5
             END")
             ->orderBy('data', 'asc')
             ->paginate(12);
 
         $categorias = Categoria::ativas()->get();
-
         return view('acao.listar', compact('acoes', 'categorias'));
     }
 
@@ -59,12 +54,12 @@ class AcaoController extends Controller
         $acoes = Acao::ativas()
             ->with('categoria')
             ->whereDate('data', now())
-            ->orderByRaw("CASE urgencia 
-                WHEN 'critica' THEN 1 
-                WHEN 'alta' THEN 2 
-                WHEN 'media' THEN 3 
-                WHEN 'baixa' THEN 4 
-                ELSE 5 
+            ->orderByRaw("CASE urgencia
+                WHEN 'critica' THEN 1
+                WHEN 'alta' THEN 2
+                WHEN 'media' THEN 3
+                WHEN 'baixa' THEN 4
+                ELSE 5
             END")
             ->paginate(12);
 
@@ -125,5 +120,16 @@ class AcaoController extends Controller
 
         return redirect()->route('acoes.show', $acao)
             ->with('success', 'Ação criada com sucesso!');
+    }
+
+    public function inscritos(Acao $acao)
+    {
+        if (auth()->id() !== $acao->organizador_id) {
+            abort(403, 'Acesso não autorizado.');
+        }
+        $voluntarios = $acao->voluntarios;
+        $doadores = $acao->doadores;
+
+        return view('acao.inscritos', compact('acao', 'voluntarios', 'doadores'));
     }
 }

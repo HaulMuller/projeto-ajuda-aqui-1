@@ -13,6 +13,14 @@
             <span class="current">{{ Str::limit($acao->titulo, 30) }}</span>
         </nav>
 
+        @php
+            // Cálculo automático do progresso
+            $totalDoado = $acao->doadores->sum('valor_estimado');
+            $meta = $acao->meta ?? 0;
+            $percentual = $meta > 0 ? round(($totalDoado / $meta) * 100) : 0;
+            if ($percentual > 100) $percentual = 100;
+        @endphp
+
         <div class="detalhe-grid">
             <!-- Coluna Principal -->
             <div class="detalhe-principal">
@@ -39,9 +47,9 @@
                             {{ $acao->categoria->icone }} {{ $acao->categoria->nome }}
                         </span>
                     @endif
-                    
+
                     <h1 class="detalhe-titulo">{{ $acao->titulo }}</h1>
-                    
+
                     <div class="detalhe-meta">
                         @if($acao->data)
                             <span class="meta-item">📅 {{ $acao->data->format('d/m/Y') }}</span>
@@ -58,18 +66,21 @@
 
                     <!-- Progresso -->
                     @if($acao->meta)
-                    <div class="detalhe-progresso">
-                        <h3>Progresso da Campanha</h3>
-                        <div class="progresso-container">
-                            <div class="progresso-barra">
-                                <div class="progresso-fill" style="width: {{ $acao->progresso }}%"></div>
-                            </div>
-                            <div class="progresso-info">
-                                <span>{{ $acao->progresso }}% concluído</span>
-                                <span>Meta: R$ {{ number_format($acao->meta, 2, ',', '.') }}</span>
+                        <div class="detalhe-progresso">
+                            <h3>Progresso da Campanha</h3>
+                            <div class="progresso-container">
+                                <div class="progresso-barra">
+                                    <div class="progresso-fill" style="width: {{ $percentual }}%"></div>
+                                </div>
+                                <div class="progresso-info">
+                                    <span>{{ $percentual }}% concluído</span>
+                                    <span>
+                                    R$ {{ number_format($totalDoado, 2, ',', '.') }}
+                                    / R$ {{ number_format($meta, 2, ',', '.') }}
+                                </span>
+                                </div>
                             </div>
                         </div>
-                    </div>
                     @endif
 
                     <!-- Estatísticas -->
@@ -118,11 +129,25 @@
                     @endif
                 </div>
 
+                {{-- Botão do Organizador: Ver inscritos --}}
+                @auth
+                    @if(auth()->id() === $acao->organizador_id)
+                        <div class="sidebar-card">
+                            <h3>👥 Inscrições da Campanha</h3>
+                            <a href="{{ route('acoes.inscritos', $acao->id) }}" class="btn-inscricao"
+                               style="display: block; text-align:center; margin-top:10px;">
+                                📋 Ver lista de inscritos
+                            </a>
+                        </div>
+                    @endif
+                @endauth
+
+
                 <!-- Formulário de Inscrição -->
                 <div class="sidebar-card inscricao-card">
                     <h3>🤝 Quero Participar!</h3>
                     <p class="inscricao-descricao">Preencha o formulário abaixo para se inscrever nesta campanha.</p>
-                    
+
                     @if(session('inscricao_sucesso'))
                         <div class="alert alert-success">
                             {{ session('inscricao_sucesso') }}
@@ -131,34 +156,34 @@
 
                     <form action="{{ route('inscricao.store', $acao->id) }}" method="POST" class="form-inscricao">
                         @csrf
-                        
+
                         <div class="form-group">
                             <label for="nome">Nome Completo *</label>
-                            <input type="text" id="nome" name="nome" required 
+                            <input type="text" id="nome" name="nome" required
                                    placeholder="Seu nome completo" value="{{ old('nome') }}">
                             @error('nome')
-                                <span class="error">{{ $message }}</span>
+                            <span class="error">{{ $message }}</span>
                             @enderror
                         </div>
 
                         <div class="form-group">
                             <label for="email">Email *</label>
-                            <input type="email" id="email" name="email" required 
+                            <input type="email" id="email" name="email" required
                                    placeholder="seu@email.com" value="{{ old('email') }}">
                             @error('email')
-                                <span class="error">{{ $message }}</span>
+                            <span class="error">{{ $message }}</span>
                             @enderror
                         </div>
 
                         <div class="form-group">
                             <label for="telefone">Telefone</label>
-                            <input type="tel" id="telefone" name="telefone" 
+                            <input type="tel" id="telefone" name="telefone"
                                    placeholder="(82) 99999-9999" value="{{ old('telefone') }}">
                         </div>
 
                         <div class="form-group">
                             <label for="tipo">Como deseja participar? *</label>
-                            <select id="tipo" name="tipo" required>
+                            <select id="tipo" name="tipo" required onchange="toggleDoacao()">
                                 <option value="">Selecione...</option>
                                 <option value="voluntario" {{ old('tipo') == 'voluntario' ? 'selected' : '' }}>
                                     🙋 Quero ser Voluntário
@@ -168,13 +193,35 @@
                                 </option>
                             </select>
                             @error('tipo')
-                                <span class="error">{{ $message }}</span>
+                            <span class="error">{{ $message }}</span>
                             @enderror
                         </div>
 
+                        <!-- Campos extras se for DOADOR -->
+                        <div id="bloco-doacao" style="display: none; margin-top: 15px;">
+
+                            <div class="form-group">
+                                <label for="tipo_doacao">Tipo de doação *</label>
+                                <select id="tipo_doacao" name="tipo_doacao">
+                                    <option value="dinheiro">💵 Dinheiro</option>
+                                    <option value="alimentos">🍎 Alimentos</option>
+                                    <option value="roupas">👕 Roupas</option>
+                                    <option value="outros">📦 Outros</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="valor_estimado">Valor estimado (R$)</label>
+                                <input type="number" step="0.01" id="valor_estimado" name="valor_estimado"
+                                       placeholder="Ex: 50.00" value="{{ old('valor_estimado') }}">
+                            </div>
+
+                        </div>
+
+
                         <div class="form-group">
                             <label for="mensagem">Mensagem (opcional)</label>
-                            <textarea id="mensagem" name="mensagem" rows="3" 
+                            <textarea id="mensagem" name="mensagem" rows="3"
                                       placeholder="Deixe uma mensagem...">{{ old('mensagem') }}</textarea>
                         </div>
 
@@ -189,11 +236,11 @@
                     <h3>📢 Compartilhar</h3>
                     <p>Ajude a divulgar esta campanha!</p>
                     <div class="share-buttons">
-                        <a href="https://wa.me/?text={{ urlencode($acao->titulo . ' - ' . route('acoes.show', $acao->id)) }}" 
+                        <a href="https://wa.me/?text={{ urlencode($acao->titulo . ' - ' . route('acoes.show', $acao->id)) }}"
                            target="_blank" class="share-btn whatsapp">
                             WhatsApp
                         </a>
-                        <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(route('acoes.show', $acao->id)) }}" 
+                        <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(route('acoes.show', $acao->id)) }}"
                            target="_blank" class="share-btn facebook">
                             Facebook
                         </a>
@@ -209,4 +256,14 @@
             </a>
         </div>
     </div>
+    <script>
+        function toggleDoacao() {
+            const tipo = document.getElementById('tipo').value;
+            document.getElementById('bloco-doacao').style.display =
+                tipo === 'doador' ? 'block' : 'none';
+        }
+        window.onload = function () {
+            toggleDoacao();
+        };
+    </script>
 </x-guest-layout>
