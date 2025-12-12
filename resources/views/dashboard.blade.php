@@ -96,7 +96,7 @@
                 </div>
 
                 <div class="d-flex justify-content-center mt-4 mb-2">
-                    <button type="submit" class="btn btn-enviar">Cadastrar Ação</button>
+                    <button type="submit" class="btn btn-enviar btn-cadastrar-acao">Cadastrar Ação</button>
                 </div>
             </form>
         </div>

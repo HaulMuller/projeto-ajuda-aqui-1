@@ -33,7 +33,7 @@
 .input-padrao-evento {
     border: 1px solid var(--cor-borda);
     border-radius: 6px;
-    height: 38.7px;
+    height: 50.7px;
     width: 100%;
     padding: 10px;
     transition: border-color 0.3s ease;
@@ -91,12 +91,13 @@
     font-weight: 500;
     transition: background-color 0.3s ease;
 }
-
 .btn.btn-enviar:hover {
     background: var(--cor-primaria-hover);
     color: #fff;
 }
-
+.btn.btn-enviar.btn-cadastrar-acao{
+    width: 190px;
+}
 .form-check-input{
     border: 2px solid var(--cor-borda);
 }

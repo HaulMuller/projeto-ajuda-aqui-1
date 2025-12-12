@@ -29,6 +29,7 @@
 .text-possui-registro{
     text-decoration: none;
     color: var(--cor-primaria);
+    padding-top: 5px;
 }
 .text-possui-registro:hover{
     text-decoration: underline;
@@ -51,4 +52,18 @@
 .btn.btn-cadastro:hover{
     background: var(--cor-primaria-hover);
     color: #fff;
+}
+.input-padrao {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    outline: none;
+    font-size: 15px;
+    transition: 0.2s;
+}
+
+.input-padrao:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
 }
