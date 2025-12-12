@@ -20,9 +20,10 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@example.com',
         ]);
 
-        // Seed categories
+        // Seed categories and actions
         $this->call([
             CategoriaSeeder::class,
+            AcaoSeeder::class,
         ]);
     }
 }
